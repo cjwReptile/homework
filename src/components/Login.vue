@@ -18,7 +18,8 @@
 		</el-form-item>
 
 		<el-form-item style="width:100%">	 
-		  			<el-button :loading="logining" type="primary" style="width:100%" @click="submitForm">sign in</el-button>		  
+		  			<el-button :loading="logining" type="primary" style="width:100%" @click="test">sign in</el-button>	
+
 		</el-form-item>
 	</el-form>
 
@@ -55,18 +56,9 @@
 						this.$router.push("/main");
 					}
 				})
-			/*	$.ajax({
-					url:'/homework/login',
-					type:'post',
-					async:false,
-					data:{
-						userName;this.form.username,
-						password:this.form.password
-					},
-					success:function(data){
-						alert(data.msg);
-					}
-				})*/
+			},
+			test:function(){
+               this.$router.push("/main");
 			}
 		}
 
