@@ -19,20 +19,19 @@
 		</el-col>
 		
 		<el-col :span="4" class="left">
-			<el-menu default-active="2" class="el-menu-vertical-demo left" >
-				<el-submenu index="1">
-					<template slot="title"><i class="el-icon-message"></i>作业管理</template>
-					<el-menu-item-group>
-						<template slot="title">作业展示</template>
-						<el-menu-item index="1-1">我的作业</el-menu-item>
-						<el-menu-item index="1-2">同学作业</el-menu-item>
-					</el-menu-item-group>
-					<el-menu-item-group title="作业编辑">
-						<el-menu-item index="1-3">提交作业</el-menu-item>
-					</el-menu-item-group>
-				</el-submenu>
-				<el-menu-item index="2"><i class="el-icon-menu"></i>个人信息</el-menu-item>
-				<el-menu-item index="3"><i class="el-icon-setting"></i>关于我们</el-menu-item>
+			<el-menu default-active="2" class="el-menu-vertical-demo left" unique-opened router>
+				<template v-for="(item,index) in $router.options.routes">
+					<el-submenu :index="index+''" v-if="!item.hidden&&!item.leaf">
+						<template slot="title">
+							<i :class="item.icon"></i>{{item.name}}
+						</template>
+						<el-menu-item v-for="child in item.children" v-if="!child.hidden" :index="child.path">
+					       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{child.name}}
+						</el-menu-item>
+						
+					</el-submenu>
+				</template>
+					
 			</el-menu>
 		</el-col>
 		<el-col :span="20" class="content">
@@ -76,7 +75,7 @@ export default{
 	height:100%;
 }
 .content{
-
+    height:100%;
 }
 .logo{
 	border-right-style: solid;

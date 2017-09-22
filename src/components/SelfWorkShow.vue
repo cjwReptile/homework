@@ -1,9 +1,11 @@
 <template>
 	<el-row>
-		<el-col :span="4">
-			<div class="head">
-				<img src="../assets/logo.png">
-			</div>
+		<el-col :span="2">
+			<span>user</span>
+		</el-col>
+		<el-col :span="21" :offset="1">
+			<img  src="../assets/logo.png">
+			
 		</el-col>
 	</el-row>
 </template>
