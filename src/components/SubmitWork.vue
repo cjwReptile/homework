@@ -27,7 +27,7 @@
 					<el-col :span="24" class="uploadBox">
 					<el-upload
 					action="/homework/image"
-					list-type="picture-card" :show-file-list="true" :auto-upload="true" class="upload">
+					list-type="picture-card" :show-file-list="true" :auto-upload="true" class="upload" :on-error="uploadError" >
 					<i class="el-icon-plus" ></i>
 				</el-upload>
 			
@@ -58,6 +58,13 @@ export default{
         },
         submitForm:function(){
 
+        },
+        uploadError:function(err,file){
+        	  this.$message({
+              showClose: true,
+          	  message: '上传失败',
+          	  type:'error'
+        });
         }
 	}
 }

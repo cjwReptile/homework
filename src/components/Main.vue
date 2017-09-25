@@ -7,7 +7,7 @@
 			<el-col :span="4" :offset="15">
 				<el-dropdown>
 					<span class="el-dropdown-link">
-						<img src="../assets/111.jpg" class="userinfo">
+						<img src="E:\intelli ide\daydayup\target\daydayup\statics\image\uploadImage\40a65b9c-f51d-4b64-be77-533c9f8d4eaakafka.png" class="userinfo">
 					</span>
 					<el-dropdown-menu slot="dropdown">
 						<el-dropdown-item>黄金糕</el-dropdown-item>
