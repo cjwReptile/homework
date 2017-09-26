@@ -18,7 +18,7 @@
 		</el-form-item>
 
 		<el-form-item style="width:100%">	 
-		  			<el-button :loading="logining" type="primary" style="width:100%" @click="test">sign in</el-button>	
+		  			<el-button :loading="logining" type="primary" style="width:100%" @click="submitForm">sign in</el-button>	
 
 		</el-form-item>
 	</el-form>
@@ -32,8 +32,8 @@
 			return {
 				logining:false,
 				form:{
-					username:"11",
-					password:"22"
+					username:"",
+					password:""
 				}
 			}
 		},
@@ -52,7 +52,7 @@
 						})
 					}else{
 						this.logining=true;
-						setTimeout(function(){alert('1')},10000000)
+						this.$store.state.admin=data.username;
 						this.$router.push("/main");
 					}
 				})

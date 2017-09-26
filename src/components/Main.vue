@@ -7,7 +7,7 @@
 			<el-col :span="4" :offset="15">
 				<el-dropdown>
 					<span class="el-dropdown-link">
-						<img src="E:\intelli ide\daydayup\target\daydayup\statics\image\uploadImage\40a65b9c-f51d-4b64-be77-533c9f8d4eaakafka.png" class="userinfo">
+						<img src="http://localhost:8080/daydayup/statics/image/uploadImage/0aa440b1-6eb1-4dc9-8249-6895a2e5ceaf电费.PNG" class="userinfo">
 					</span>
 					<el-dropdown-menu slot="dropdown">
 						<el-dropdown-item>黄金糕</el-dropdown-item>
@@ -17,6 +17,8 @@
 				</el-dropdown>
 			</el-col>
 		</el-col>
+
+		
 		
 		<el-col :span="4" class="left">
 			<el-menu default-active="2" class="el-menu-vertical-demo left" unique-opened router>
