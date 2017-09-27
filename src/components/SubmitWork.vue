@@ -1,12 +1,5 @@
 <template>
 	<el-row class="container">
-		<!-- <el-col :span="16" :offset="2">
-			<el-steps :space="250" :active="active">
-				<el-step title="添加作业描述" ></el-step>
-				<el-step title="填写作业信息" ></el-step>
-				<el-step title="上传作业" ></el-step>
-			</el-steps>
-		</el-col> -->
 		<el-col :span="16">
 			<el-form label-width="100px">
 				<el-form-item label="作业描述">
@@ -50,7 +43,7 @@
 </template>
 <script>
  import {sendHomeWorkInfo} from '../api/api'
-export default{
+ export default{
    
 	data(){
 		return{
@@ -65,18 +58,18 @@ export default{
 			form:{			
 				contentDescription:"",
 				contentAuthority:"1",
-				contentId:"7",
+				contentId:"21",
 				userName:this.$store.state.admin
 			}
 		}
 	},
 	methods:{
-        next:function(){
-            this.active++;
-        },
         submitForm:function(){
               sendHomeWorkInfo(this.form).then(data=>{
-              	    alert("success");
+              	    if(data.flag=="1"){
+                        this.$store.state.show="/selfworkshow";
+              	    	//this.$router.push('/selfworkshow');
+              	    }
               })
            //   this.$refs.upload.submit();
         },
@@ -90,7 +83,8 @@ export default{
 	}
 }
 </script>
-<style >
+
+<style>
 .container{
 	margin: 10px 10px 10px 10px;
 	border: solid #F9FAFC 1px;

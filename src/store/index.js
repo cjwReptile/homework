@@ -5,6 +5,7 @@ Vue.use(vuex);
 
 export default new vuex.Store({
      state:{
-     	admin:""
+     	admin:"",
+     	show:""
      }
 })
