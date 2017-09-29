@@ -23,7 +23,7 @@
 		</el>
 		
 		<el-col :span="4" class="left">
-			<el-menu :default-active="$store.state.show" class="el-menu-vertical-demo left" unique-opened router >
+			<el-menu :default-active="$route.path" class="el-menu-vertical-demo left" unique-opened router >
 				<template v-for="(item,index) in $router.options.routes">
 					<el-submenu :index="index+''" v-if="!item.hidden&&!item.leaf">
 						<template slot="title">
