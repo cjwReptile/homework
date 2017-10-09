@@ -15,3 +15,8 @@ export const getHomeWorkKey=params=>{
 	   return axios.post('/homework/homeWorkKey',params)
 	   .then(res=>res.data);
 }
+
+export const getHomeWorkList=params=>{
+	   return axios.post('/homework/homeWorkInfo1',params)
+	   .then(res=>res.data);
+}

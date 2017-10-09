@@ -15,24 +15,31 @@
 			</el-col>
 
 			<el-col :span="24">
-				<el-col :span="10" class="imageContent">
-					<img src="../assets/111.jpg" class="contentName">
-				</el-col>
-				<el-col :span="10" class="imageContent">
-					<img src="../assets/111.jpg" class="contentName">
-				</el-col>
-
+				<template v-for="item in contentList">
+					<template v-for="itemSon in item.homeWorkLocationPos">
+						<img :src="itemSon.contentUrl" class="imageContent">
+					</template>
+				</template>
 			</el-col>
 
 			
 		</el-col>
+		<el-button @click="homeWorkInfo">ssssss</el-button>
 	</el-row>
 </template>
 <script >
+import {getHomeWorkList} from '../api/api'
 export default{
 	data(){
 		return {
-
+            contentList:{},
+		}
+	},
+	methods:{
+		homeWorkInfo:function(){
+			getHomeWorkList().then(data=>{
+				this.contentList=data;
+			})
 		}
 	}
 }
@@ -57,7 +64,7 @@ export default{
 }
 .imageContent{
 	padding: 5px;
-	height: 200px;
-	width: 200px;
+	height: 20%;
+	width: 20%;
 }
 </style>

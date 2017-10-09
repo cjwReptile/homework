@@ -80,6 +80,7 @@ export default{
 }
 .content{
     height:100%;
+    overflow: auto;
 }
 .logo{
 	border-right-style: solid;
