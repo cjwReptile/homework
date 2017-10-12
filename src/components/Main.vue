@@ -81,6 +81,7 @@ export default{
 .content{
     height:100%;
     overflow: auto;
+    background-color:#F0F0F0;
 }
 .logo{
 	border-right-style: solid;
