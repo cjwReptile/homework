@@ -24,10 +24,21 @@ export default new Router({
       children: [
             { path: '/selfworkshow',
              component: SelfWorkShow, 
-             name: '我的作业',
-             icon:'el-icon-star-on'},
-            { path: '/teamworkshow',
+             name: '未阅列表',
+             icon:'el-icon-star-on',
+             badge:"selfworkshow"},
+            { path: '/notReadWorkshow',
              component: TeamWorkShow,
+              name: '未阅列表',
+              icon:'el-icon-document'
+            }, 
+            { path: '/mYworkshow',
+             component: TeamWorkShow,
+              name: '我的作业',
+              icon:'el-icon-document'
+            }, 
+             {path: '/allWorkshow',
+              component: TeamWorkShow,
               name: '作业列表',
               icon:'el-icon-document'
             }, 

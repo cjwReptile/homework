@@ -1,7 +1,9 @@
+
 <template>
 	<el-row class="selfContainer" >
 		<template v-for="(item,index) in contentList" >
-			<el-row>
+			<el-row v-show="shows[index]">
+			
 		<el-col :span="16" :offset="4" class="record">
 			<el-col :span="1" >
 				<img src="../assets/111.jpg" class="head">
@@ -46,11 +48,11 @@
 							</el-rate>
 						</el-col>
 						<el-col :span="24">
-							<el-input type="textarea" :rows="3" v-model="value[index]" placeholder="评语"></el-input>
+							<el-input type="textarea" :rows="3" v-model="comment[index]" placeholder="评语"></el-input>
 						</el-col>
 
 						<el-col :span="2" :offset="22" class="poseButton">
-							<el-button @click="pose(index)" type="primary">点评</el-button>
+							<el-button @click="poseHomeWorkContent(index)" type="primary">点评</el-button>
 						</el-col>
 						
 
@@ -66,6 +68,8 @@
 </template>
 <script >
 import {getHomeWorkList} from '../api/api'
+import {saveHomeWorkContent} from '../api/api'
+import Vue from 'vue'
 export default{
 	data(){
 		return {
@@ -75,28 +79,39 @@ export default{
             	maxHeigth:""
             },
             texts:[1,2,3,4,5],
-            value:[],
+            comment:[],
             contentIds:[],
             rates:[],
-            loading:true
+            shows:[],
+            test:true
+           
 		}
 	},
 	methods:{
 		homeWorkInfo:function(){
 			getHomeWorkList().then(data=>{
-				
+				let middle=[];
 				for(let i=0;i<data.length;i++){
 				    data[i].size=8;
 				
 				}
 				this.contentList=data;
-
+             
 			})
 		},
-		pose:function(index){
-             alert(this.contentIds[index]);
-             alert(this.value[index]);
-             alert(this.rates[index]);
+		poseHomeWorkContent:function(index){
+			 let homeWorkCommentPo={
+                 contentId:this.contentIds[index],
+                 comment:this.comment[index],
+                 score:this.rates[index]
+			 }
+             saveHomeWorkContent(homeWorkCommentPo).then(data=>{
+                 if(data.flag==1){
+                     this.shows[index]=false;   
+                     Vue.set(this.shows, index, this.shows[index]);             
+                 }
+
+             })
 		}
 	},
 	mounted:function(){//获取作业记录key
@@ -104,12 +119,12 @@ export default{
 				
 				for(let i=0;i<data.length;i++){
 				    data[i].size=8;
-				    this.contentIds[i]=data[i].contentId;				
+				    this.contentIds[i]=data[i].contentId;	
+				    this.shows[i]=true;			
 				}
 				this.contentList=data;
                
 			})  
-            this.loading=false;
    }
 }
 </script>

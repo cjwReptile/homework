@@ -31,6 +31,9 @@
 						</template>
 						<el-menu-item v-for="child in item.children" v-if="!child.hidden" :index="child.path">
 					       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{child.name}}
+					       <el-badge v-if="child.badge=='selfworkshow'" :value="12">
+					       	
+					       </el-badge>
 						</el-menu-item>
 						
 					</el-submenu>

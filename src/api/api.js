@@ -20,3 +20,8 @@ export const getHomeWorkList=params=>{
 	   return axios.post('/homework/homeWorkInfo1',params)
 	   .then(res=>res.data);
 }
+
+export const saveHomeWorkContent=params=>{
+	   return axios.post('/homework/homeworkContent',params)
+	   .then(res=>res.data);
+}
