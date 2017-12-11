@@ -10,7 +10,7 @@
 				</el-form-item>
 
 				<el-form-item label="是否公开">
-					<el-col :span="4">
+					<el-col :span="6">
 						<el-radio class="radio" v-model="form.contentAuthority" label="1">是</el-radio>
 						<el-radio class="radio" v-model="form.contentAuthority" label="2">否</el-radio>
 					</el-col>
