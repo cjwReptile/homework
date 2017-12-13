@@ -9,14 +9,14 @@
                    inactive-text="未阅作业"
                     active-color="#13ce66"
                    inactive-color="#ff4949"
-                   active-value=0
-                   inactive-value=1
+                   active-value=1
+                   inactive-value=0
                    @change="homeWorkInfo()">
                  </el-switch>
 			</el-col>
 		</el-row>
 		<template v-for="(item,index) in contentList" >
-			<el-row v-show="shows[index]">
+			<el-row v-show="shows[index]||(item.contentReaded=='1')">
 			
 		<el-col :span="16" :offset="4" class="record">
 			<el-col :span="1" >
@@ -115,7 +115,6 @@ export default{
 				
 				}
 				this.contentList=data;
-             
 			})
 		},
 		poseHomeWorkContent:function(index){//提交作业点评
@@ -142,7 +141,9 @@ export default{
 				for(let i=0;i<data.length;i++){
 				    data[i].size=8;
 				    this.contentIds[i]=data[i].contentId;	
-				    this.shows[i]=true;			
+				    if(data[0].contentReaded=='0'){
+				    	 this.shows[i]=true;	
+				    }			   		
 				}
 				this.contentList=data;
                

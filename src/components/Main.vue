@@ -18,9 +18,9 @@
 			</el-col>
 		</el-col>
 
-		<el :span="24">
+		<el-col :span="24">
 			{{$store.state.show}}
-		</el>
+		</el-col>
 		
 		<el-col :span="4" class="left">
 			<el-menu :default-active="$route.path" class="el-menu-vertical-demo left" unique-opened router >
