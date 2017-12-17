@@ -136,7 +136,11 @@ export default{
 		   let params={
 		   	  listType:this.listType
 		   }
-            getHomeWorkList(params).then(data=>{
+           let headers={
+           	   clentDegist:this.$store.state.token
+           }
+           alert(headers.clentDegist);
+           getHomeWorkList(params,headers).then(data=>{
 				
 				for(let i=0;i<data.length;i++){
 				    data[i].size=8;

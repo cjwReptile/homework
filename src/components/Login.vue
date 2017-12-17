@@ -53,8 +53,7 @@
 					}else{
 						this.logining=true;
 						this.$store.state.admin=data.username;
-						let reg = "JSESSIONID";
-						let arr = document.cookie.split(";");
+						this.$store.state.token=data.token;
 						this.$router.push("/main");
 
 					}
