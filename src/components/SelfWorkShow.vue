@@ -106,7 +106,8 @@ export default{
 		homeWorkInfo:function(){
 		
 			 let params={
-		   	  listType:this.listType
+		   	  listType:this.listType,
+		   	   userName:this.$store.state.admin
 		   }
 			getHomeWorkList(params).then(data=>{
 				let middle=[];
@@ -134,12 +135,14 @@ export default{
 	},
 	mounted:function(){//获取作业列表，唯一主键
 		   let params={
-		   	  listType:this.listType
+		   	  listType:this.listType,
+		   	  userName:this.$store.state.admin
 		   }
            let headers={
            	   clentDegist:this.$store.state.token
            }
            alert(headers.clentDegist);
+           alert(params.userName);
            getHomeWorkList(params,headers).then(data=>{
 				
 				for(let i=0;i<data.length;i++){
