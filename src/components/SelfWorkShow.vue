@@ -109,12 +109,14 @@ export default{
 		   	  listType:this.listType,
 		   	   userName:this.$store.state.admin
 		   }
+
 			getHomeWorkList(params).then(data=>{
 				let middle=[];
 				for(let i=0;i<data.length;i++){
 				    data[i].size=8;
 				
 				}
+  alert(params.userName+"sss");
 				this.contentList=data;
 			})
 		},

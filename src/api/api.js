@@ -53,6 +53,7 @@ axios.interceptors.request.use(
 		return config;
 	} ,
 	error=> {
+		alert("sssss");
 		return Promise.reject(error);
 	});
 
@@ -61,28 +62,13 @@ axios.interceptors.response.use(
 		return response;
 	},
 	error => {
-
+		alert(error.response.status);
 		if (error.response) {
 
 			switch (error.response.status) {
-				case 306:   
-				Alert('此操作将永久删除该文件, 是否继续?', '提示', {
-					confirmButtonText: '确定',
-					cancelButtonText: '取消',
-					type: 'warning'
-				}).then(() => {
-					this.$message({
-						type: 'success',
-						message: '删除成功!'
-					});
-				}).catch(() => {
-					this.$message({
-						type: 'info',
-						message: '已取消删除'
-					});          
-				});
-
-
+				case 306:   		
+                alert(error.response.data.msg);
+ 
 				router.push("/");
 
 				break;
