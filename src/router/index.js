@@ -10,51 +10,75 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
-    {
-      path: '/',
-      name: 'Login',
-      component: Login,
-      hidden:true
-    },
-     {
-      path: '/main',
-      name: '作业管理',
-      component: Main,
-      icon:'el-icon-menu',
-      children: [
-            { path: '/selfworkshow',
-             component: SelfWorkShow, 
-             name: '未阅列表',
-             icon:'el-icon-star-on',
-             badge:"selfworkshow"},
-            { path: '/notReadWorkshow',
-             component: TeamWorkShow,
+  {
+    path: '/',
+    name: 'Login',
+    component: Login,
+    hidden:true
+  },
+  {
+    path: '/main',
+    name: '作业管理',
+    component: Main,
+    icon:'el-icon-menu',
+    meta:{
+            auth: true // 这里设置，当前路由需要校验
+          },
+          children: [
+          { path: '/selfworkshow',
+          component: SelfWorkShow, 
+          meta:{
+                auth: true // 这里设置，当前路由需要校验
+              },
               name: '未阅列表',
-              icon:'el-icon-document'
-            }, 
-            { path: '/mYworkshow',
-             component: TeamWorkShow,
-              name: '我的作业',
-              icon:'el-icon-document'
-            }, 
-             {path: '/allWorkshow',
+              icon:'el-icon-star-on',
+              badge:"selfworkshow"},
+              { path: '/notReadWorkshow',
               component: TeamWorkShow,
-              name: '作业列表',
-              icon:'el-icon-document'
-            }, 
+              meta:{
+            auth: true // 这里设置，当前路由需要校验
+          },
+          name: '未阅列表',
+          icon:'el-icon-document'
+        }, 
+        { path: '/mYworkshow',
+        component: TeamWorkShow,
+        meta:{
+            auth: true // 这里设置，当前路由需要校验
+          },
+          name: '我的作业',
+          icon:'el-icon-document'
+        }, 
+        {path: '/allWorkshow',
+        component: TeamWorkShow,
+        meta:{
+            auth: true // 这里设置，当前路由需要校验
+          },
+          name: '作业列表',
+          icon:'el-icon-document'
+        }, 
         ]
-    },
-     {
-      path: '/main',
-      name: '编辑作业',
-      component: Main,
-      icon:'el-icon-menu',
-      children: [
-            { path: '/submitwork',
-             component: SubmitWork, 
-             name: '提交作业',
-             icon:'el-icon-star-on'}
+      },
+      {
+        path: '/main',
+        name: '编辑作业',
+        component: Main,
+        meta:{
+            auth: true // 这里设置，当前路由需要校验
+          },
+          icon:'el-icon-menu',
+          children: [
+          { path: '/submitwork',
+          component: SubmitWork, 
+          meta:{
+            auth: true // 这里设置，当前路由需要校验
+          },
+          name: '提交作业',
+          icon:'el-icon-star-on'}
+          ]
+        },
         ]
-    },
-  ]
-})
+      }
+      )
+
+
