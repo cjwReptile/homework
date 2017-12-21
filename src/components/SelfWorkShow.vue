@@ -4,85 +4,94 @@
 		<el-row>
 			<el-col :span="4" :offset="16">
 				<el-switch
-                   v-model="listType"
-                   active-text="全部作业"
-                   inactive-text="未阅作业"
-                    active-color="#13ce66"
-                   inactive-color="#ff4949"
-                   active-value=1
-                   inactive-value=0
-                   @change="homeWorkInfo()">
-                 </el-switch>
-			</el-col>
-		</el-row>
-		<template v-for="(item,index) in contentList" >
-			<el-row v-show="shows[index]||(item.contentReaded=='1')">
+				v-model="listType"
+				active-text="全部作业"
+				inactive-text="未阅作业"
+				active-color="#13ce66"
+				inactive-color="#ff4949"
+				active-value=1
+				inactive-value=0
+				@change="homeWorkInfo()">
+			</el-switch>
+		</el-col>
+	</el-row>
+	<template v-for="(item,index) in contentList" >
+		<el-row v-show="shows[index]||(item.contentReaded=='1')">
 			
-		<el-col :span="16" :offset="4" class="record">
-			<el-col :span="1" >
-				<img src="../assets/111.jpg" class="head">
-			</el-col>
-			<el-col :span="2" class="">
-				<el-col :span="24">
-					{{item.userName}}
+			<el-col :span="16" :offset="4" class="record">
+				<el-col :span="1" >
+					<img src="../assets/111.jpg" class="head">
 				</el-col>
-				<el-col :span="24">
-					{{item.contentTime}}
-				</el-col>
-			</el-col>
-
-			<el-col :span="24">
-			
-					<el-row>
-						<el-col :span="5">
-							{{item.contentId}}
+				<el-col :span="2">
+					<el-col :span="24">
+						{{item.userName}}
 					</el-col>
-					</el-row>
-					
-				    <el-row>
-					<template v-for="itemSon in item.homeWorkLocationPos">
-						
-						<el-col :span="item.size">
-						<div class="imageContent">
-							<img :src="itemSon.contentUrl" class="image">
-					    </div>
-						</el-col>
+					<el-col :span="24">
+						{{item.contentTime}}
+					</el-col>
+				</el-col>
 
-					</template>
-					</el-row>
+
+				<el-col :span="5" :offset="15" class="score">
+					<h1>	{{item.score}}</h1>
+				
+				</el-col>
+
+
+				<el-col :span="24">
+
+					
 					<el-row>
+						<template v-for="itemSon in item.homeWorkLocationPos">
+
+							<el-col :span="item.size">
+								<div class="imageContent">
+									<img :src="itemSon.contentUrl" class="image">
+								</div>
+							</el-col>
+
+						</template>
+					</el-row>
+
+
+					<el-row v-show="item.contentReaded=='0'">
 						<el-col :span="24">
 							<el-rate 
 							v-model="rates[index]" 
 							show-text 
 							text-color="#ff9900" 
-                            :texts="texts"
-                     
-                            >
-							</el-rate>
-						</el-col>
-						<el-col :span="24">
-							<el-input type="textarea" :rows="3" v-model="comment[index]" placeholder="评语"></el-input>
-						</el-col>
+							:texts="texts"
 
-						<el-col :span="2" :offset="21" class="poseButton">
-							<el-button @click="poseHomeWorkContent(index)" type="primary">点评</el-button>
-						</el-col>
-						
+							>
+						</el-rate>
+					</el-col>
+					<el-col :span="24">
+						<el-input type="textarea" :rows="3" v-model="comment[index]" placeholder="评语"></el-input>
+					</el-col>
+					
+					<el-col :span="2" :offset="21" class="poseButton">
+						<el-button @click="poseHomeWorkContent(index)" type="primary">点评</el-button>
+					</el-col>
 
-					</el-row>
-			
+					
+				</el-row> 
+
+				<el-row v-show="item.contentReaded=='1'">
+
+				</el-row>
+
 			</el-col>
 
 			
 		</el-col>
 	</el-row>
-	</template>
-	</el-row>
+</template>
+</el-row>
 </template>
 <script >
 import {getHomeWorkList} from '../api/api'
 import {saveHomeWorkContent} from '../api/api'
+import {getLoginInfo} from '../util/util'
 import Vue from 'vue'
 export default{
 	data(){
@@ -98,37 +107,36 @@ export default{
             rates:[],//评分组
             shows:[],//是否显示
             test:true,
-            listType:0 //0查所有列表 1查未阅列表
-           
-		}
-	},
-	methods:{
-		homeWorkInfo:function(){
-		
-			 let params={
-		   	  listType:this.listType,
-		   	   userName:this.$store.state.admin
-		   }
+            listType:0 ,//0查所有列表 1查未阅列表
+            roles:[]
+        }
+    },
+    methods:{
+    	homeWorkInfo:function(){
 
-			getHomeWorkList(params).then(data=>{
-				let middle=[];
-				for(let i=0;i<data.length;i++){
-				    data[i].size=8;
-				
-				}
-  alert(params.userName+"sss");
-				this.contentList=data;
-			})
-		},
+    		let params={
+    			listType:this.listType,
+    			userName:this.$store.state.admin
+    		}
+
+    		getHomeWorkList(params).then(data=>{
+    			let middle=[];
+    			for(let i=0;i<data.length;i++){
+    				data[i].size=8;
+
+    			}
+    			this.contentList=data;
+    		})
+    	},
 		poseHomeWorkContent:function(index){//提交作业点评
-			 let homeWorkCommentPo={
-                 contentId:this.contentIds[index],
-                 comment:this.comment[index],
-                 score:this.rates[index]
-			 }
-             saveHomeWorkContent(homeWorkCommentPo).then(data=>{
-                 if(data.flag==1){
-                     this.shows[index]=false;   
+			let homeWorkCommentPo={
+				contentId:this.contentIds[index],
+				comment:this.comment[index],
+				score:this.rates[index]
+			}
+			saveHomeWorkContent(homeWorkCommentPo).then(data=>{
+				if(data.flag==1){
+					this.shows[index]=false;   
                      Vue.set(this.shows, index, this.shows[index]); //提交之后未阅列表不再显示此条记录            
                  }
 
@@ -136,28 +144,31 @@ export default{
 		}
 	},
 	mounted:function(){//获取作业列表，唯一主键
-		   let params={
-		   	  listType:this.listType,
-		   	  userName:this.$store.state.admin
-		   }
-           let headers={
-           	   clentDegist:this.$store.state.token
-           }
-           alert(headers.clentDegist);
-           alert(params.userName);
-           getHomeWorkList(params,headers).then(data=>{
-				
-				for(let i=0;i<data.length;i++){
-				    data[i].size=8;
-				    this.contentIds[i]=data[i].contentId;	
-				    if(data[0].contentReaded=='0'){
-				    	 this.shows[i]=true;	
-				    }			   		
-				}
-				this.contentList=data;
-               
-			})  
-   }
+		let userinfo=getLoginInfo();
+		if(this.$store.state.admin==null||this.$store.state.admin=="")
+			this.$store.state.admin=userinfo.username
+		if(this.$store.state.token==null||this.$store.state.token=="")
+			this.$store.state.token=userinfo.token
+		let params={
+			listType:this.listType,
+			userName:this.$store.state.admin
+		}
+		let headers={
+			clentDegist:this.$store.state.token
+		}
+		getHomeWorkList(params,headers).then(data=>{
+
+			for(let i=0;i<data.length;i++){
+				data[i].size=8;
+				this.contentIds[i]=data[i].contentId;	
+				if(data[0].contentReaded=='0'){
+					this.shows[i]=true;	
+				}			   		
+			}
+			this.contentList=data;
+
+		})  
+	}
 }
 </script>
 <style>
@@ -181,7 +192,7 @@ export default{
 }
 .contentName{
 	margin: 5px;
-    max-height: 100%;
+	max-height: 100%;
 	max-width: 100%;
 }
 .imageContent{
@@ -198,12 +209,15 @@ export default{
 	float: left;
 }
 .el-row {
-    margin-bottom: 20px;
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
- .poseButton{
- 	 margin-top: 10px;
- }
+	margin-bottom: 20px;
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+.poseButton{
+	margin-top: 10px;
+}
+.score{
+	color:#E6A23C;
+}
 </style>

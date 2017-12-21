@@ -44,6 +44,7 @@ export const saveHomeWorkContent=params=>{
 	.then(res=>res.data);
 }
 
+
 axios.interceptors.request.use(
 	config=>{
 		if(store.state.token&&store.state.admin){
@@ -53,7 +54,6 @@ axios.interceptors.request.use(
 		return config;
 	} ,
 	error=> {
-		alert("sssss");
 		return Promise.reject(error);
 	});
 

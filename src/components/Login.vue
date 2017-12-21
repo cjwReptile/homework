@@ -26,7 +26,7 @@
 </template>
 <script >
     import {requestLogin} from '../api/api';
-
+    import {setLoginInfo} from '../util/util';
 	export default{
 		data(){
 			return {
@@ -54,8 +54,12 @@
 						this.logining=true;
 						this.$store.state.admin=data.username;
 						this.$store.state.token=data.token;
+                        setLoginInfo({//写入到localStorage
+                        	username:data.username,
+                        	token:data.token,
+                        	roles:data.roles
+                        })
 						this.$router.push("/main");
-
 					}
 				})
 			},

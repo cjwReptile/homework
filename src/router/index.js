@@ -22,41 +22,40 @@ export default new Router({
     component: Main,
     icon:'el-icon-menu',
     meta:{
-            auth: true // 这里设置，当前路由需要校验
-          },
-          children: [
-          { path: '/selfworkshow',
+      auth: true,// 这里设置，当前路由需要校验
+    },
+    children: [
+          { 
+          path: '/selfworkshow',
           component: SelfWorkShow, 
           meta:{
-                auth: true // 这里设置，当前路由需要校验
-              },
-              name: '未阅列表',
-              icon:'el-icon-star-on',
-              badge:"selfworkshow"},
-              { path: '/notReadWorkshow',
-              component: TeamWorkShow,
-              meta:{
-            auth: true // 这里设置，当前路由需要校验
+              auth: true // 这里设置，当前路由需要校验
           },
-          name: '未阅列表',
-          icon:'el-icon-document'
-        }, 
-        { path: '/mYworkshow',
-        component: TeamWorkShow,
-        meta:{
+          name: '作业列表',
+          icon:'el-icon-star-on',
+          badge:"selfworkshow"
+          },
+
+          {
+          path: '/mYworkshow',
+          component: TeamWorkShow,
+          meta:{
             auth: true // 这里设置，当前路由需要校验
           },
           name: '我的作业',
           icon:'el-icon-document'
-        }, 
-        {path: '/allWorkshow',
-        component: TeamWorkShow,
-        meta:{
+          }, 
+
+
+          {
+          path: '/allWorkshow',
+          component: TeamWorkShow,
+          meta:{
             auth: true // 这里设置，当前路由需要校验
           },
           name: '作业列表',
           icon:'el-icon-document'
-        }, 
+          }, 
         ]
       },
       {
@@ -64,18 +63,19 @@ export default new Router({
         name: '编辑作业',
         component: Main,
         meta:{
-            auth: true // 这里设置，当前路由需要校验
-          },
-          icon:'el-icon-menu',
-          children: [
-          { path: '/submitwork',
+          auth: true // 这里设置，当前路由需要校验
+        },
+        icon:'el-icon-menu',
+        children: [
+          { 
+          path: '/submitwork',
           component: SubmitWork, 
           meta:{
             auth: true // 这里设置，当前路由需要校验
           },
           name: '提交作业',
           icon:'el-icon-star-on'}
-          ]
+        ]
         },
         ]
       }
