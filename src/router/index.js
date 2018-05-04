@@ -5,6 +5,8 @@ import Main from '@/components/Main'
 import SelfWorkShow from '@/components/SelfWorkShow'
 import TeamWorkShow from '@/components/TeamWorkShow'
 import SubmitWork from '@/components/SubmitWork'
+import Integration from '@/components/Integration'
+import IntegrationMnage from '@/components/IntegrationMnage'
 
 Vue.use(Router)
 
@@ -74,9 +76,41 @@ export default new Router({
             auth: true // 这里设置，当前路由需要校验
           },
           name: '提交作业',
-          icon:'el-icon-star-on'}
+          icon:'el-icon-star-on'
+        }
         ]
         },
+
+        {
+        path: '/main',
+        name: '积分管理',
+        component: Main,
+        meta:{
+          auth: true // 这里设置，当前路由需要校验
+        },
+        icon:'el-icon-menu',
+        children: [
+          { 
+          path: '/integration',
+          component: Integration, 
+          meta:{
+            auth: true // 这里设置，当前路由需要校验
+          },
+          name: '积分板块',
+          icon:'el-icon-star-on'
+         },
+         { 
+          path: '/integration',
+          component: Integration, 
+          meta:{
+            auth: true // 这里设置，当前路由需要校验
+          },
+          name: '增加版块',
+          icon:'el-icon-star-on'
+        }
+        ]
+        }        
+
         ]
       }
       )

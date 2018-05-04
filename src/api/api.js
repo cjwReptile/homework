@@ -2,8 +2,8 @@ import axios from 'axios'
 import Vue from 'vue'
 import store from '../store'
 import router from '../router'
+import {getLoginInfo} from '../util/util'
 import {Message,Confirm,Alert } from 'element-ui'
-let base = 'http://localhost:8080/daydayup/homework';
 
 //axios.defaults.withCredentials=true
 export const requestLogin = params => {
@@ -44,12 +44,28 @@ export const saveHomeWorkContent=params=>{
 	.then(res=>res.data);
 }
 
+export const getPlateList=params=>{
+    return   axios({
+		url:"/integrate/plateParent",
+		data:params,
+		method:"get",
+		withCredentials:true,
+        }).then(res=>res.data);
+}
+
+
 
 axios.interceptors.request.use(
+	
 	config=>{
+		let userInfo=getLoginInfo();
+
 		if(store.state.token&&store.state.admin){
 			config.headers.clentDegist = store.state.token;
 			config.headers.username = store.state.admin;
+		}else if(userInfo&&userInfo.username&&userInfo.token){
+            config.headers.clentDegist = userInfo.token;
+			config.headers.username = userInfo.username;
 		}
 		return config;
 	} ,
@@ -62,7 +78,6 @@ axios.interceptors.response.use(
 		return response;
 	},
 	error => {
-		alert(error.response.status);
 		if (error.response) {
 
 			switch (error.response.status) {

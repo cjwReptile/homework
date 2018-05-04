@@ -34,6 +34,13 @@ module.exports = {
             pathRewrite: {
                 '^/homework':''
             }
+        },
+        '/integrate':{
+            target:'http://127.0.0.1:8080/daydayup/integrate',
+            changeOrigin: true,
+            pathRewrite: {
+                '^/integrate':''
+            }
         }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"

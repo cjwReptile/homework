@@ -7,7 +7,7 @@
 			<el-col :span="4" :offset="15">
 				<el-dropdown>
 					<span class="el-dropdown-link">
-						<img src="http://localhost:8080/daydayup/statics/image/uploadImage/0aa440b1-6eb1-4dc9-8249-6895a2e5ceaf电费.PNG" class="userinfo">
+						<img src="http://localhost:80/daydayup/statics/image/uploadImage/0aa440b1-6eb1-4dc9-8249-6895a2e5ceaf电费.PNG" class="userinfo">
 					</span>
 					<el-dropdown-menu slot="dropdown">
 						<el-dropdown-item>黄金糕</el-dropdown-item>

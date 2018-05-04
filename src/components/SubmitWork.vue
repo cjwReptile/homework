@@ -21,7 +21,7 @@
 					<el-col :span="24" class="uploadBox">
 						<el-upload
 						ref="upload"
-						action="/homework/workLocationInfo"
+						:action="uploadUrl"
 						list-type="picture-card" :show-file-list="true" :auto-upload="false" class="upload" :on-error="uploadError"
 						:data="workInfo" :on-success="uploadSuccess">
 						<i class="el-icon-plus" ></i>
@@ -55,7 +55,8 @@ export default{
 				contentAuthority:"1",
 				contentId:"",
 				userName:this.$store.state.admin
-			}
+			},
+			uploadUrl:"/homework/imageTest"
 		}
 	},
 	methods:{
@@ -71,11 +72,10 @@ export default{
 						type:'error'
 					});
 				}
-			})
-			
-            
+			})            
        },
        uploadError:function(err,file){
+        console.log(err);
        	this.$message({
        		showClose: true,
        		message: '上传失败',
@@ -91,6 +91,7 @@ export default{
            getHomeWorkKey("").then(data=>{
            	   this.workInfo.contentId=data.key;
            	   this.form.contentId=data.key;
+           	   alert(data.key);
            })          
    }
 }
