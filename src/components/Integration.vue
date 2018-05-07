@@ -34,8 +34,18 @@
 										</template>
 									</el-table-column> -->
 
-									<el-table-column prop="date" label="时间" align='left'>	
+									<el-table-column prop="updateTimeStr" label="时间" align='left'>	
+                                          <template slot-scope="scope">
 
+								
+											<template>
+
+												{{scope.row.updateTimeStr}}
+
+											</template>
+
+
+										</template>
 
 									</el-table-column>
 									<el-table-column prop="plateName" label="板块名称" align='left'>
@@ -131,7 +141,7 @@
 							message: '添加成功',
 							type:'success'
 						});
-
+                        this.getPlate(this.params);
                      	}else{
                      		this.$message({
 							showClose: true,
@@ -141,10 +151,20 @@
                      	}
                      })
 				},
-				uploadError:function(err,file){
-
+				getPlate:function(params){
+                    getPlateList(this.params).then(data=>{
+					if(data.flag==false){
+						this.$message({
+							showClose: true,
+							message: '加载数据失败',
+							type:'error'
+						});
+					}else{
+						this.tableData=data.data;
+					}
+				})
 				},
-				uploadSuccess:function(){
+				deletePlate:function(id){
 					this.$router.push({path:'/selfworkshow'});
 				},
 				handleEdit:function(index,row){
@@ -166,20 +186,9 @@
 				}
 			},
 			mounted:function(){
-                let userInfo=getLoginInfo();
-       
+                let userInfo=getLoginInfo();    
 				this.params.plateBelong=userInfo.username;
-				getPlateList(this.params).then(data=>{
-					if(data.flag==false){
-						this.$message({
-							showClose: true,
-							message: '加载数据失败',
-							type:'error'
-						});
-					}else{
-						this.tableData=data.data;
-					}
-				});
+				this.getPlate(this.params);
 
 			}
 		}
