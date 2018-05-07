@@ -53,6 +53,15 @@ export const getPlateList=params=>{
         }).then(res=>res.data);
 }
 
+export const insertPlate=params=>{
+    return   axios({
+		url:"/integrate/plateParent",
+		data:params,
+		method:"post",
+		withCredentials:true,
+        }).then(res=>res.data);
+}
+
 
 
 axios.interceptors.request.use(

@@ -10,64 +10,70 @@
 						<el-form-item label="增加板块">
 							<el-row>
 								<el-col :span="10">
-									<el-input type="input"></el-input>
+									<el-input type="input" v-model="params.plateName"></el-input>
 								</el-col>
 								<el-col :span="4">
-									<el-button type="primary" >提交</el-button>
+									<el-button type="primary" @click="addPlate()">提交</el-button>
 								</el-col>
 							</el-row>
 						</el-form-item>
 
 						<el-form-item label="已有板块">
-							<el-table :data="tableData"  border>
+							<el-table :data="tableData"  border show-Header="false">
 
 
-								<el-table-column type="expand" style="padding: ">
+							<!-- 	<el-table-column type="expand">
 									<template slot-scope="props" >
-
-									</template>
-								</el-table-column>
-
-								<el-table-column prop="date" label="时间" align='left'>	
-
-
-								</el-table-column>
-								<el-table-column prop="plateName" label="板块名称" align='left'>
-									<template slot-scope="scope">
-
-										<template v-if="shows[scope.$index]">
-                                        
-										<el-input v-model="scope.row.plateName">
-                                        
-										</el-input>
+										<el-form label-position="left" inline class="demo-table-expand">
+											<template v-for="prop in props.row.data">
+											<el-form-item label="商品名称">
+												<span>{{ prop.row.plateNameSon }}</span>
+											</el-form-item>
+											</template>
+										</el-form>
 										</template>
-										<template v-else>
-							
-											{{scope.row.plateName}}
-									
+									</el-table-column> -->
+
+									<el-table-column prop="date" label="时间" align='left'>	
+
+
+									</el-table-column>
+									<el-table-column prop="plateName" label="板块名称" align='left'>
+										<template slot-scope="scope">
+
+											<template v-if="shows[scope.$index]">
+
+												<el-input v-model="scope.row.plateName">
+
+												</el-input>
+											</template>
+											<template v-else>
+
+												{{scope.row.plateName}}
+
+											</template>
+
+
 										</template>
 
+									</el-table-column>
 
-									</template>
+									<el-table-column  label="操作" align='left'>
+										<template slot-scope="scope">
 
-								</el-table-column>
 
-								<el-table-column  label="操作" align='left'>
-									<template slot-scope="scope">
-                                       
+											<el-button
+											size="mini"
+											@click="handleEdit(scope.$index, scope.row)">
+											<template v-if="shows[scope.$index]">
+												取消
+											</template>
+											<template v-else>
+												编辑
+											</template>
+										</el-button>
 
 										<el-button
-										size="mini"
-										@click="handleEdit(scope.$index, scope.row)">
-										<template v-if="shows[scope.$index]">
-											取消
-										</template>
-										<template v-else>
-											编辑
-										</template>
-									     </el-button>
-
-                                         <el-button
 										size="mini"
 										type=""
 										v-if="shows[scope.$index]"
@@ -98,6 +104,8 @@
 	<script>
 		import Vue from 'vue'
 		import {getPlateList} from '../api/api'
+		import {getLoginInfo} from '../util/util'
+        import {insertPlate} from '../api/api'
 
 		export default{
 
@@ -105,13 +113,33 @@
 				return{
 					plateParent:"",
 					shows:[],
-					tableData:[]
+					tableData:[],
+					userInfo:{},
+					params:{
+						plateBelong:"",
+                        plateName:""
+					}
 
 				}
 			},
 			methods:{
-				submitForm:function(){
+				addPlate:function(){
+                     insertPlate(this.params).then(data=>{
+                     	if(data.flag==true){
+                     		this.$message({
+							showClose: true,
+							message: '添加成功',
+							type:'success'
+						});
 
+                     	}else{
+                     		this.$message({
+							showClose: true,
+							message: '添加失败',
+							type:'error'
+						});
+                     	}
+                     })
 				},
 				uploadError:function(err,file){
 
@@ -121,44 +149,46 @@
 				},
 				handleEdit:function(index,row){
 					if(this.shows[index]==true){
-                         this.shows[index]=false;
-                         Vue.set(this.shows, index, this.shows[index]);
+						this.shows[index]=false;
+						Vue.set(this.shows, index, this.shows[index]);
 					}else{
-						 this.shows[index]=true;
-                         Vue.set(this.shows, index, this.shows[index]);
+						this.shows[index]=true;
+						Vue.set(this.shows, index, this.shows[index]);
 					}
-                  
+
 				},
 				handelUpdate:function(index,row){
-                       this.shows[index]=false;
-                       Vue.set(this.shows, index, this.shows[index]);
+					this.shows[index]=false;
+					Vue.set(this.shows, index, this.shows[index]);
 				},
 				handleDelete:function(row){
 
 				}
 			},
-	        mounted:function(){
-	        	let params={};
-                getPlateList(params).then(data=>{
-            	 if(data.flag==false){
-                	this.$message({
-						showClose: true,
-						message: '加载数据失败',
-						type:'error'
-					});
-                 }else{
-                 	this.tableData=data.data;
-                 }
-            });
-           
-	   }
-	}
-</script>
+			mounted:function(){
+                let userInfo=getLoginInfo();
+       
+				this.params.plateBelong=userInfo.username;
+				getPlateList(this.params).then(data=>{
+					if(data.flag==false){
+						this.$message({
+							showClose: true,
+							message: '加载数据失败',
+							type:'error'
+						});
+					}else{
+						this.tableData=data.data;
+					}
+				});
 
-<style>
-.container{
-	margin: 10px 10px 10px 10px;
-	height: 100%;
-	padding: 20px
-}
+			}
+		}
+	</script>
+
+	<style>
+	.container{
+		margin: 10px 10px 10px 10px;
+		height: 100%;
+		padding: 20px
+	}
 </style>
